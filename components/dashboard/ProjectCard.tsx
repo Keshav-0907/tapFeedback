@@ -2,8 +2,13 @@
 
 import React from 'react'
 import { useRouter } from 'next/navigation'
+import { getCurrentDate } from '@/lib/helperFunctions'
+import { Badge } from "@/components/ui/badge"
+import { Separator } from '../ui/separator'
+import { Button } from '../ui/button'
 
-const ProjectCard = ({ project }: { project: any }) => {
+
+const ProjectCard = ({ project, key }: { project: any, key: any }) => {
     const router = useRouter()
 
     const handleNavigation = () => {
@@ -12,10 +17,25 @@ const ProjectCard = ({ project }: { project: any }) => {
 
     return (
         <div
-            onClick={handleNavigation}
-            className="border-2 border-gray-300 rounded-lg p-4 m-2 bg-accent cursor-pointer"
+            key={key}
+            className="rounded-lg py-2 px-4 bg-accent hover:bg-accent/60 border-[1px] hover:border-accent flex flex-col gap-10"
         >
-            {project.title}
+            <div>
+                <div className='flex items-center justify-between'>
+                    <div>
+                        {project.title}
+                    </div>
+                    <Badge variant="outline" className='bg-primary/40'>Active</Badge>
+                </div>
+
+                <div className="text-xs text-gray-300">
+                    {getCurrentDate({ date: project.createdAt })}
+                </div>
+            </div>
+
+            <Button variant={'outline'} onClick={handleNavigation} className='cursor-pointer'>
+                Open
+            </Button>
         </div>
     )
 }

@@ -31,8 +31,6 @@ const Projects = () => {
         fetchProjects();
     }, [])
 
-    console.log('projects', projects);
-
     return (
         <div className='flex flex-col gap-4 p-4'>
             <div className='flex justify-end'>
@@ -43,7 +41,7 @@ const Projects = () => {
 
             <div>
                 {projects.length > 0 ? (
-                    <div className='grid grid-cols-3'>
+                    <div className='grid grid-cols-4'>
                         {projects.map((project: any) => (
                             <ProjectCard key={project._id} project={project} />
                         ))}

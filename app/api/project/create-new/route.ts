@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from '@/lib/db'
+import { prisma } from '@/lib/db';
 
 export async function POST(request: Request) {
     const { title, url, userId } = await request.json();
@@ -15,7 +15,7 @@ export async function POST(request: Request) {
             message: "User not found"
         }, {
             status: 404
-        })
+        });
     }
 
     const project = await prisma.project.create({
@@ -31,13 +31,36 @@ export async function POST(request: Request) {
             message: "Project creation failed"
         }, {
             status: 500
-        })
+        });
     }
+
+    const popup = await prisma.popup.create({
+        data: {
+            projectId: project.id,
+            title: "We value your feedback!",
+            titleSize: "20px",
+            titleColor: "#000000",
+            backgroundColor: "#ffffff",
+            textColor: "#000000",
+            borderColor: "#cccccc",
+            borderWidth: "1px",
+            borderRadius: "8px",
+            feedbackType: "text",
+            showTextInput: true,
+            ctaText: "Submit",
+            ctaTextColor: "#ffffff",
+            ctaBackgroundColor: "#000000",
+            delay: 5,
+            entryAnimation: "fade-in",
+            exitAnimation: "fade-out"
+        }
+    });
 
     return Response.json({
         message: "Project created successfully",
-        project
+        project,
+        popup
     }, {
         status: 201
-    })
+    });
 }

@@ -48,7 +48,6 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
     const handleSubmit = async () => {
         if (mode === "signin") {
             const res = await login(email, password);
-            console.log('res', res)
         } else {
 
             if (!name || !email || !password) {
