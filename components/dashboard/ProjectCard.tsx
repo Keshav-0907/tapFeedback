@@ -8,7 +8,7 @@ import { Separator } from '../ui/separator'
 import { Button } from '../ui/button'
 
 
-const ProjectCard = ({ project, key }: { project: any, key: any }) => {
+const ProjectCard = ({ project }: { project: any }) => {
     const router = useRouter()
 
     const handleNavigation = () => {
@@ -17,7 +17,6 @@ const ProjectCard = ({ project, key }: { project: any, key: any }) => {
 
     return (
         <div
-            key={key}
             className="rounded-lg py-2 px-4 bg-accent hover:bg-accent/60 border-[1px] hover:border-accent flex flex-col gap-10"
         >
             <div>

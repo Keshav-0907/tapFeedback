@@ -48,6 +48,23 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
     const handleSubmit = async () => {
         if (mode === "signin") {
             const res = await login(email, password);
+            if (res) {
+                if (res.status === 200) {
+                    toast.success(res.msg, {
+                        description: "Logged in successfully",
+                    })
+                    setShowAuthModal(false);
+                    resetForm();
+                }
+            } else {
+                toast.error("Invalid credentials", {
+                    description: "Please check your email and password",
+                })
+                setError("Invalid credentials");
+                setTimeout(() => {
+                    setError("");
+                }, 3000);
+            }
         } else {
 
             if (!name || !email || !password) {

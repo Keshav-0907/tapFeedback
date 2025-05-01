@@ -18,6 +18,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Button } from '../ui/button';
 import { Minus, Plus } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface AppearanceProps {
   popupId: string;
@@ -51,7 +52,7 @@ const Appearance = ({ popupId }: AppearanceProps) => {
     setStyleChanged(hasChanged);
   }, [popupStyles, initialStyles]);
 
-  
+
   const updatePopup = async () => {
     if (!popupStyles || !initialStyles) return;
 
@@ -74,29 +75,52 @@ const Appearance = ({ popupId }: AppearanceProps) => {
     }
   }
 
+  const handleDiscardChanges = () => {
+    if (popupStyles && initialStyles) {
+      setPopupStyles(initialStyles);
+      setStyleChanged(false);
+    }
+    toast.error('Changes discarded!');
+  }
+
   return (
-    <div className="p-6 text-white">
+    <div className="px-8 py-4 space-y-8 text-white">
       <div className='flex justify-between items-center'>
-        <div className="flex flex-col gap-1 mb-6">
-          <h2 className="text-2xl font-semibold">Appearance</h2>
-          <p className="text-muted-foreground">Customize your widget's appearance here.</p>
+        <div className="flex flex-col">
+          <div className='flex items-center gap-4'>
+            <div className="text-2xl font-semibold">Appearance</div>
+            {styleChanged && (
+              <p className="text-xs text-red-500">(You have unsaved changes!)</p>
+            )}
+          </div>
+          <p className="text-muted-foreground text-sm">Customize your widget's appearance here.</p>
         </div>
 
-        <Button
-          disabled={!styleChanged}
-          onClick={updatePopup}
-        >
-          Save Changes
-        </Button>
+        {
+          styleChanged && (
+            <div className="flex gap-4">
+              <Button
+                variant="secondary"
+                onClick={updatePopup}
+                className="bg-primary hover:bg-primary/80 text-white cursor-pointer"
+              >
+                Save Changes
+              </Button>
+              <Button variant={'outline'} onClick={handleDiscardChanges}>
+                Discard Changes
+              </Button>
+            </div>
+          )
+        }
 
       </div>
 
       <div className="grid grid-cols-3 gap-4">
         {/* Title Settings */}
-        <Card className="p-4 space-y-4">
+        <Card className="p-4">
           <div>
             <h3 className="font-medium">Title Settings</h3>
-            <p className="text-muted-foreground text-sm">Customize the title of your widget.</p>
+            <p className="text-muted-foreground text-xs">Customize the title of your widget.</p>
           </div>
           <Separator />
           <div className="space-y-4">
@@ -140,10 +164,10 @@ const Appearance = ({ popupId }: AppearanceProps) => {
         </Card>
 
         {/* Display Settings */}
-        <Card className="p-4 space-y-4">
+        <Card className="p-4">
           <div>
             <h3 className="font-medium">Display Settings</h3>
-            <p className="text-muted-foreground text-sm">Customize the background and position of your widget.</p>
+            <p className="text-muted-foreground text-xs">Customize the background and position of your widget.</p>
           </div>
           <Separator />
           <div className="space-y-4">
@@ -188,10 +212,10 @@ const Appearance = ({ popupId }: AppearanceProps) => {
         </Card>
 
         {/* CTA Settings */}
-        <Card className="p-4 space-y-4">
+        <Card className="p-4">
           <div>
             <h3 className="font-medium">CTA Settings</h3>
-            <p className="text-muted-foreground text-sm">Customize the CTA of your widget.</p>
+            <p className="text-muted-foreground text-xs">Customize the CTA of your widget.</p>
           </div>
           <Separator />
           <div className="space-y-4">
@@ -213,10 +237,10 @@ const Appearance = ({ popupId }: AppearanceProps) => {
         </Card>
 
         {/* Misc Settings */}
-        <Card className="p-4 space-y-4">
+        <Card className="p-4">
           <div>
             <h3 className="font-medium">Miscellaneous</h3>
-            <p className="text-muted-foreground text-sm">Additional popup behavior options.</p>
+            <p className="text-muted-foreground text-xs">Additional popup behavior options.</p>
           </div>
           <Separator />
           <div className="flex justify-between">
@@ -239,10 +263,10 @@ const Appearance = ({ popupId }: AppearanceProps) => {
         </Card>
 
         {/* Border Settings */}
-        <Card className="p-4 space-y-4">
+        <Card className="p-4">
           <div>
             <h3 className="font-medium">Border Settings</h3>
-            <p className="text-muted-foreground text-sm">Customize the border appearance of your widget.</p>
+            <p className="text-muted-foreground text-xs">Customize the border appearance of your widget.</p>
           </div>
           <Separator />
           <div className="space-y-4">

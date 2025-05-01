@@ -1,8 +1,11 @@
 import { NextRequest } from "next/server";
 import axios from "axios";
 
-export async function GET(req: NextRequest, { params }: { params: { popupId: string } }) {
-  const { popupId } = params;
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { popupId: string } }
+) {
+  const { popupId } = await params;
 
   try {
     const res = await axios.post(`${process.env.NEXT_PUBLIC_SITE_URL}/api/popup/get-popup`, {
@@ -13,82 +16,129 @@ export async function GET(req: NextRequest, { params }: { params: { popupId: str
 
     const script = `
 (function() {
-  var widget = document.createElement('div');
-  widget.innerHTML = \`
+  const popup = ${JSON.stringify(popup)};
+  const popupId = popup.id;
+
+  const div = document.createElement('div');
+  div.innerHTML = \`
     <div id="tap-popup" style="
-      width: 320px;
-      background-color: #1a1a1a;
-      color: white;
-      font-family: sans-serif;
-      padding: 24px;
-      border-radius: 12px;
+      width: 360px;
+      background-color: \${popup.backgroundColor || '#fff'};
+      color: \${popup.textColor || '#000'};
+      font-family: Inter, sans-serif;
+      padding: 20px;
+      border-radius: \${popup.borderRadius || 12}px;
       position: fixed;
       bottom: 40px;
       right: 40px;
       z-index: 9999;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-      border: 1px solid #ffffff22;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      border: \${popup.borderWidth || 1}px solid \${popup.borderColor || '#ddd'};
+      animation: \${popup.entryAnimation || 'fade-in'} 0.4s ease-out;
+      transition: all 0.5s ease;
     ">
       <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h3 style="font-size: 18px; font-weight: bold;">Hello, Did you find what you wanted ??</h3>
-        <button id="closeBtn" style="
-          background: none;
+        <div style="font-weight: 600; color: \${popup.titleColor}; font-size: \${popup.titleSize || 16}px;">
+          \${popup.title || 'How was your experience?'}
+        </div>
+        <button onclick="document.getElementById('tap-popup')?.remove()" style="
+          background: transparent;
           border: none;
-          color: white;
-          font-size: 18px;
+          color: \${popup.textColor || '#000'};
+          font-size: 20px;
           cursor: pointer;
-        ">&times;</button>
+          line-height: 1;
+        ">×</button>
       </div>
-      <div style="margin: 16px 0; text-align: center;">
-        \${[1,2,3,4,5].map(i => \`<span class="tap-star" data-rating="\${i}" style="font-size: 24px; cursor: pointer;">☆</span>\`).join('')}
-        <div style="display: flex; justify-content: space-between; font-size: 12px; margin-top: 4px;">
-          <span>Poor</span><span>Awesome</span>
+
+      <div style="margin: 16px 0 8px;">
+        <div style="display: flex; justify-content: space-between; gap: 10px;">
+          \${[1, 2, 3, 4, 5].map(i => {
+            const emojis = ['😡','😕','😐','🙂','😍'];
+            const labels = ['Terrible','Bad','Okay','Good','Excellent'];
+            return \`
+              <div onclick="setRating(\${i})" style='text-align: center; cursor: pointer; user-select: none; color: #ccc;' data-index="\${i}">
+                <div style="font-size: 24px;">\${emojis[i - 1]}</div>
+                <div style="font-size: 10px; margin-top: 4px; color: \${popup.textColor || '#666'};">\${labels[i - 1]}</div>
+              </div>
+            \`;
+          }).join('')}
         </div>
       </div>
-      <textarea id="feedbackText" placeholder="Leave your comments..." style="
+
+      \${popup.showTextInput ? \`
+        <textarea id="feedbackText" placeholder="Leave your comments..." style="
+          width: 100%;
+          padding: 10px;
+          margin-top: 10px;
+          border-radius: 6px;
+          border: 1px solid #ccc;
+          background-color: rgba(240,240,240,0.6);
+          color: #333;
+          resize: vertical;
+          height: 60px;
+          font-size: 14px;
+          font-family: inherit;
+        "></textarea>
+      \` : ''}
+
+      <button id="submitBtn" disabled style="
+        margin-top: 14px;
         width: 100%;
-        padding: 8px;
-        margin-top: 10px;
-        border-radius: 6px;
-        border: none;
-        resize: vertical;
-        height: 60px;
-        background-color: #333;
-        color: white;
-      "></textarea>
-      <button id="submitBtn" style="
-        margin-top: 12px;
-        width: 100%;
-        padding: 10px;
-        background-color: #444;
-        color: white;
+        padding: 10px 16px;
+        background-color: \${popup.ctaBackgroundColor || '#000'};
+        color: \${popup.ctaTextColor || '#fff'};
         border: none;
         border-radius: 6px;
-        cursor: pointer;
-      ">SUBMIT</button>
-      <hr style="margin: 16px 0; border-color: #555;" />
-      <div style="text-align: center; font-size: 12px;">Powered by Tap Feedback</div>
+        cursor: not-allowed;
+        font-weight: 600;
+        font-size: 14px;
+        opacity: 0.6;
+      ">
+        \${popup.ctaText || 'Submit'}
+      </button>
     </div>
   \`;
 
-  document.body.appendChild(widget);
+  document.body.appendChild(div);
 
-  document.querySelectorAll('.tap-star').forEach(star => {
-    star.addEventListener('click', function() {
-      const rating = this.getAttribute('data-rating');
-      document.querySelectorAll('.tap-star').forEach(s => s.textContent = '☆');
-      for (let i = 0; i < rating; i++) {
-        document.querySelectorAll('.tap-star')[i].textContent = '★';
-      }
+  let currentRating = 0;
+  const stars = div.querySelectorAll('[data-index]');
+
+  window.setRating = function(i) {
+    currentRating = i;
+    stars.forEach((s, idx) => {
+      s.style.color = idx < i ? '#f5a623' : '#ccc';
+      s.style.fontWeight = idx < i ? 'bold' : 'normal';
     });
-  });
+    const btn = document.getElementById('submitBtn');
+    if (btn) {
+      btn.disabled = false;
+      btn.style.cursor = 'pointer';
+      btn.style.opacity = '1';
+    }
+  };
 
-  document.getElementById('closeBtn').addEventListener('click', () => {
-    document.getElementById('tap-popup')?.remove();
-  });
+  document.getElementById('submitBtn')?.addEventListener('click', async () => {
+    const feedbackText = document.getElementById('feedbackText')?.value || "";
 
-  document.getElementById('submitBtn').addEventListener('click', () => {
-    alert("Thanks for your feedback!");
+    try {
+      await fetch('${process.env.NEXT_PUBLIC_SITE_URL}/api/popup/submit-popup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          popupId,
+          rating: currentRating,
+          feedback: feedbackText,
+        }),
+      });
+
+      alert('Thank you for your feedback!');
+    } catch (err) {
+      console.error('Failed to submit feedback:', err);
+      alert('There was an error submitting your feedback.');
+    }
+
     document.getElementById('tap-popup')?.remove();
   });
 })();

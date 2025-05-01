@@ -18,7 +18,7 @@ const GetStarted = ({ embedCode }: GetStartedProps) => {
 
 
     return (
-        <div className="p-6 space-y-8 text-sm text-white">
+        <div className="px-8 py-4 space-y-8 text-sm text-white">
             <h1 className="text-2xl font-semibold">Get Started</h1>
 
             <div className="space-y-4">

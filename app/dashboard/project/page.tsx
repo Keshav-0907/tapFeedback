@@ -2,6 +2,7 @@
 import AddProjectModal from '@/components/common/AddProjectModal';
 import ProjectCard from '@/components/dashboard/ProjectCard';
 import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
@@ -33,17 +34,23 @@ const Projects = () => {
 
     return (
         <div className='flex flex-col gap-4 p-4'>
-            <div className='flex justify-end'>
+            <div className='flex justify-between items-center'>
+
+                <div className='text-2xl font-bold'>
+                    Your Projects
+                </div>
                 <Button className="cursor-pointer text-white" onClick={() => setShowAddProjectModal(true)}>
                     New Project
                 </Button>
             </div>
 
+            <Separator/>
+
             <div>
                 {projects.length > 0 ? (
                     <div className='grid grid-cols-4'>
-                        {projects.map((project: any) => (
-                            <ProjectCard key={project._id} project={project} />
+                        {projects.map((project: any, index) => (
+                            <ProjectCard key={index} project={project} />
                         ))}
                     </div>
                 ) : (

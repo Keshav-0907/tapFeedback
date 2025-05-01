@@ -15,12 +15,12 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(cuid())
+  id        String     @id @default(cuid())
   name      String?
-  email     String?   @unique
+  email     String?    @unique
   password  String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   Project   Project[]
 }
 
@@ -36,11 +36,14 @@ model Project {
 }
 
 model Popup {
-  id                 String   @id @default(cuid())
+  id                 String     @id @default(cuid())
   projectId          String
   title              String?
   titleSize          String?
   titleColor         String?
+  description        String?
+  descriptionSize    String?
+  descriptionColor   String?
   backgroundColor    String?
   textColor          String?
   borderColor        String?
@@ -52,9 +55,21 @@ model Popup {
   ctaTextColor       String?
   ctaBackgroundColor String?
   delay              Int?
+  position           String?
   entryAnimation     String?
   exitAnimation      String?
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-  project            Project  @relation(fields: [projectId], references: [id])
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  project            Project    @relation(fields: [projectId], references: [id])
+  Feedback           Feedback[]
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  popupId   String
+  rating    Int
+  feedback  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Popup     Popup    @relation(fields: [popupId], references: [id])
 }

@@ -9,6 +9,9 @@ import axios from 'axios';
 import { Popup } from '@/types';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import Responses from '@/components/dashboard/Responses';
 
 const Project = () => {
   const { projectId } = useParams();
@@ -55,15 +58,6 @@ const Project = () => {
     )
   }
 
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(embedCode);
-      alert('Copied to clipboard!');
-    } catch (error) {
-      console.error('Failed to copy:', error);
-    }
-  };
-
   const embedCode = `
 useEffect(() => {
   const script = document.createElement("script");
@@ -82,18 +76,24 @@ useEffect(() => {
       case 'get-started':
         return <GetStarted embedCode={embedCode} />
       case 'appearance':
-        return <Appearance popupId={popUp.id}/>
+        return <Appearance popupId={popUp.id} />
       case 'settings':
         return <Settings />
+      case 'responses':
+        return <Responses />
       default:
         return null;
     }
   }
 
   return (
-    <div className=''>
-      <div className="flex items-center gap-8 border-b border-border px-4 pt-2">
+    <div className='py-4'>
+      <Link href={'/dashboard/project'} className='text-sm flex items-center gap-2 text-muted-foreground px-4 pt-2'>
+        <ArrowLeft size={16} /> Back to Projects
+      </Link>
+      <div className="flex items-center gap-8 border-b border-border px-10 pt-8">
         {[
+          { label: "Responses", value: "responses" },
           { label: "Get Started", value: "get-started" },
           { label: "Design", value: "appearance" },
           { label: "Settings", value: "settings" },
@@ -110,8 +110,6 @@ useEffect(() => {
           </button>
         ))}
       </div>
-
-
 
       <div>
         {renderTab()}

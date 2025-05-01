@@ -35,7 +35,7 @@ const Sidebar = () => {
   return (
     <div className='border-r w-52 bg-[#18181B] flex flex-col justify-between'>
       <div className='flex flex-col gap-2'>
-        <div className='p-2 border-b'>
+        <div className='p-4 border-b'>
           Logo Area
         </div>
 

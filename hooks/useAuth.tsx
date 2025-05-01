@@ -1,9 +1,10 @@
 'use client'
 import { use, useEffect, useState } from "react";
 import axios from "axios";
+import { User } from "@/types";
 
 const useAuth = () => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -30,8 +31,8 @@ const useAuth = () => {
 
         fetchUser();
     }, []);
-    
-   
+
+
     const login = async (email: string, password: string) => {
         try {
             const res = await axios.post("/api/auth/login-user", {
@@ -40,15 +41,25 @@ const useAuth = () => {
             })
 
             localStorage.setItem("authToken", res.data.token);
-
+            window.location.href = "/";
             return res.data;
         } catch (error) {
             console.error("Login error:", error);
             return null;
         }
     }
-    
-    return { user, loading,login };
+
+    const logout = async () => {
+        try {
+            localStorage.removeItem("authToken");
+            setUser(null);
+            window.location.href = "/";
+        } catch (error) {
+            console.error("Logout error:", error);
+        }
+    }
+
+    return { user, loading, login, logout };
 }
 
 export default useAuth;
