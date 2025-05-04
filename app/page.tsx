@@ -13,17 +13,19 @@ export default function Home() {
   const router = useRouter()
 
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "http://localhost:3000/embed/cma5ei9xl0009uls2rmpi3bn0";
-    script.async = true;
-    document.body.appendChild(script);
-  
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-    
+  // useEffect(() => {
+  //   const script = document.createElement("script");
+  //   script.src = "http://localhost:3000/embed/cma6bxu0h0003ulatnwojvsiy";
+  //   script.async = true;
+  //   document.body.appendChild(script);
+
+  //   return () => {
+  //     document.body.removeChild(script);
+  //   };
+  // }, []);
+
+
+
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">

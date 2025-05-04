@@ -15,24 +15,25 @@ datasource db {
 }
 
 model User {
-  id        String     @id @default(cuid())
+  id        String    @id @default(cuid())
   name      String?
-  email     String?    @unique
+  email     String?   @unique
   password  String?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   Project   Project[]
 }
 
 model Project {
-  id        String   @id @default(cuid())
-  title     String?
-  url       String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  Popup     Popup[]
+  id         String   @id @default(cuid())
+  title      String?
+  url        String?
+  screenshot String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  Popup      Popup[]
 }
 
 model Popup {

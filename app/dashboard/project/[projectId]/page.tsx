@@ -12,6 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Responses from '@/components/dashboard/Responses';
+import Loader from '@/components/common/Loader';
 
 const Project = () => {
   const { projectId } = useParams();
@@ -49,12 +50,7 @@ const Project = () => {
 
   if (!popUp) {
     return (
-      <div className='flex items-center justify-center h-screen'>
-        <Card className='w-1/2 p-6'>
-          <div className='text-center text-lg font-semibold'>No Popups Found</div>
-          <p className='text-muted-foreground'>Please create a popup to get started.</p>
-        </Card>
-      </div>
+      <Loader/>
     )
   }
 
@@ -80,7 +76,7 @@ useEffect(() => {
       case 'settings':
         return <Settings />
       case 'responses':
-        return <Responses />
+        return <Responses popupId={popUp.id}/>
       default:
         return null;
     }

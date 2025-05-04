@@ -1,5 +1,6 @@
 'use client'
 import AddProjectModal from '@/components/common/AddProjectModal';
+import Loader from '@/components/common/Loader';
 import ProjectCard from '@/components/dashboard/ProjectCard';
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator';
@@ -31,6 +32,12 @@ const Projects = () => {
 
         fetchProjects();
     }, [])
+
+    if (loading) {
+        return (
+            <Loader/>
+        )
+    }
 
     return (
         <div className='flex flex-col gap-4 p-4'>

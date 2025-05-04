@@ -39,6 +39,7 @@ export async function GET(req: Request) {
             title: true,
             url: true,
             createdAt: true,
+            screenshot: true,
         }
     })
 
