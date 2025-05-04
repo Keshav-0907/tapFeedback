@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import type { NextRequest } from "next/server";
 
-export async function POST(req: NextResponse) {
-    const { popupId } = await req.json();
-
+export async function POST(req: NextRequest) {
     try {
+        const { popupId } = await req.json();
+
         if (!popupId) {
             return NextResponse.json({ error: 'Popup ID is required' }, { status: 400 });
         }
+
         const feedbacks = await prisma.feedback.findMany({
             where: {
                 popupId: popupId,
@@ -20,11 +22,11 @@ export async function POST(req: NextResponse) {
 
         return NextResponse.json({
             msg: 'Feedbacks fetched successfully',
-            feedbacks: feedbacks,
+            feedbacks,
         }, {
-            status: 200
+            status: 200,
         });
     } catch (error) {
-        return NextResponse.json({ error: 'Err' }, { status: 500 });
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }

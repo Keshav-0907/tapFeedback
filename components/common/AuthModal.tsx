@@ -107,7 +107,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/40">
+        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs bg-black/50">
             <Card ref={modalRef} className="w-full max-w-md p-6">
                 <CardHeader className="text-center">
                     <CardTitle className="text-2xl">

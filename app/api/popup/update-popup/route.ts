@@ -22,7 +22,7 @@ export async function PUT(req: NextRequest) {
   } catch (error) {
     console.error("Popup update error:", error);
     return NextResponse.json(
-      { msg: "Failed to update popup", error: error.message },
+      { msg: "Failed to update popup" },
       { status: 500 }
     );
   }

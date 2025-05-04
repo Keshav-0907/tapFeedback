@@ -3,9 +3,8 @@ import axios from "axios";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { popupId: string } }
 ) {
-  const { popupId } = await params;
+  const popupId = req.nextUrl.pathname.split("/").pop();
 
   try {
     const res = await axios.post(`${process.env.NEXT_PUBLIC_SITE_URL}/api/popup/get-popup`, {

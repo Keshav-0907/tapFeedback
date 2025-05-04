@@ -9,7 +9,11 @@ import useAuth from '@/hooks/useAuth';
 import { toast } from "sonner"
 import axios from 'axios';
 
-const AddProjectModal = ({ setShowAddProjectModal }) => {
+interface AddProjectModalProps {
+    setShowAddProjectModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const AddProjectModal = ({ setShowAddProjectModal } : AddProjectModalProps) => {
     const modalRef = useRef<HTMLDivElement>(null);
     const [projectTitle, setProjectTitle] = useState("");
     const [projectURL, setProjectURL] = useState("");

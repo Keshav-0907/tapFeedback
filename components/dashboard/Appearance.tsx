@@ -58,6 +58,7 @@ const Appearance = ({ popupId }: AppearanceProps) => {
 
     const changedFields = Object.entries(popupStyles).reduce((acc, [key, value]) => {
       if (initialStyles[key as keyof Popup] !== value) {
+        // @ts-ignore - TODO
         acc[key] = value;
       }
       return acc;
