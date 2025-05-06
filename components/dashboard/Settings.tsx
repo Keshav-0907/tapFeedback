@@ -2,7 +2,9 @@ import React from 'react'
 
 const Settings = () => {
   return (
-    <div>Settings</div>
+    <div className='px-8 py-4 space-y-8'>
+      Settings
+    </div>
   )
 }
 

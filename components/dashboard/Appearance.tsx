@@ -19,6 +19,7 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from '../ui/button';
 import { Minus, Plus } from 'lucide-react';
 import { toast } from 'sonner';
+import { ColorPicker } from '../common/ColorPicker';
 
 interface AppearanceProps {
   popupId: string;
@@ -85,13 +86,13 @@ const Appearance = ({ popupId }: AppearanceProps) => {
   }
 
   return (
-    <div className="px-8 py-4 space-y-8 text-white">
+    <div className="px-8 py-4 space-y-8">
       <div className='flex justify-between items-center'>
         <div className="flex flex-col">
           <div className='flex items-center gap-4'>
             <div className="text-2xl font-semibold">Appearance</div>
             {styleChanged && (
-              <p className="text-xs text-red-500">(You have unsaved changes!)</p>
+              <p className="text-xs text-red-500 font-medium">(You have unsaved changes!)</p>
             )}
           </div>
           <p className="text-muted-foreground text-sm">Customize your widget's appearance here.</p>
@@ -132,7 +133,13 @@ const Appearance = ({ popupId }: AppearanceProps) => {
             <div className="flex gap-4">
               <div className="flex flex-col gap-2">
                 <Label>Title Color</Label>
-                <Input value={popupStyles?.titleColor || ''} onChange={(e) => setPopupStyles({ ...popupStyles!, titleColor: e.target.value })} />
+                <ColorPicker
+                  value={popupStyles?.titleColor || '#000000'}
+                  onChange={(newColor) =>
+                    setPopupStyles({ ...popupStyles!, titleColor: newColor })
+                  }
+                />
+
               </div>
               <div className="flex flex-col gap-2">
                 <Label>Title Size</Label>
@@ -174,7 +181,12 @@ const Appearance = ({ popupId }: AppearanceProps) => {
           <div className="space-y-4">
             <div className="space-y-2">
               <Label>Background Color</Label>
-              <Input value={popupStyles?.backgroundColor || ''} onChange={(e) => setPopupStyles({ ...popupStyles!, backgroundColor: e.target.value })} />
+              <ColorPicker
+                value={popupStyles?.backgroundColor || '#ffffff'}
+                onChange={(newColor) =>
+                  setPopupStyles({ ...popupStyles!, backgroundColor: newColor })
+                }
+              />
             </div>
             <div className='flex justify-between'>
               <div className="space-y-2">
@@ -227,11 +239,21 @@ const Appearance = ({ popupId }: AppearanceProps) => {
             <div className="flex gap-4">
               <div className="flex flex-col gap-2 w-full">
                 <Label>CTA Text Color</Label>
-                <Input value={popupStyles?.ctaTextColor || ''} onChange={(e) => setPopupStyles({ ...popupStyles!, ctaTextColor: e.target.value })} />
+                <ColorPicker
+                  value={popupStyles?.ctaTextColor || '#000000'}
+                  onChange={(newColor) =>
+                    setPopupStyles({ ...popupStyles!, ctaTextColor: newColor })
+                  }
+                />
               </div>
               <div className="flex flex-col gap-2 w-full">
                 <Label>CTA Background Color</Label>
-                <Input value={popupStyles?.ctaBackgroundColor || ''} onChange={(e) => setPopupStyles({ ...popupStyles!, ctaBackgroundColor: e.target.value })} />
+                <ColorPicker
+                  value={popupStyles?.ctaBackgroundColor || '#000000'}
+                  onChange={(newColor) =>
+                    setPopupStyles({ ...popupStyles!, ctaBackgroundColor: newColor })
+                  }
+                />
               </div>
             </div>
           </div>
@@ -278,7 +300,12 @@ const Appearance = ({ popupId }: AppearanceProps) => {
             <div className="flex gap-4">
               <div className="flex flex-col gap-2">
                 <Label>Border Color</Label>
-                <Input value={popupStyles?.borderColor || ''} onChange={(e) => setPopupStyles({ ...popupStyles!, borderColor: e.target.value })} />
+                <ColorPicker
+  value={popupStyles?.borderColor || '#000000'}
+  onChange={(newColor) =>
+    setPopupStyles({ ...popupStyles!, borderColor: newColor })
+  }
+/>
               </div>
               <div className="flex flex-col gap-2">
                 <Label>Border Radius</Label>

@@ -4,7 +4,7 @@ import HeroVideoDialog from '../magicui/hero-video-dialog'
 
 const Demo = () => {
     return (
-        <div className='py-20 flex items-center justify-center flex-col gap-5 '>
+        <div className='flex py-5 items-center justify-center flex-col gap-5 '>
             <div className='max-w-3xl flex flex-col gap-2'>
                 <div className='text-center text-3xl font-bold'>
                     Watch It Work

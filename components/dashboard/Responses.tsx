@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -56,15 +56,16 @@ const Responses = ({ popupId }: ResponsesProps) => {
   });
 
   const handleSort = (key: keyof FeedbackData) => {
-    if (key === sortKey) setSortAsc(!sortAsc);
-    else {
+    if (key === sortKey) {
+      setSortAsc(!sortAsc);
+    } else {
       setSortKey(key);
       setSortAsc(true);
     }
   };
 
   return (
-    <div className="rounded-lg border bg-card text-card-foreground shadow-sm py-4 px-2">
+    <div className="rounded-lg border bg-card text-card-foreground shadow-sm py-4 px-2 my-4 mx-2">
       <Table>
         <TableHeader>
           <TableRow>
@@ -92,17 +93,26 @@ const Responses = ({ popupId }: ResponsesProps) => {
             </TableHead>
           </TableRow>
         </TableHeader>
+
         <TableBody>
-          {sortedData.map((item) => (
-            <TableRow key={item.id}>
-              <TableCell className="max-w-[160px] truncate">{item.id}</TableCell>
-              <TableCell>{item.rating}</TableCell>
-              <TableCell className="max-w-[200px] truncate text-muted-foreground">
-                {item.feedback || <span className="italic text-gray-400">No feedback</span>}
+          {sortedData.length > 0 ? (
+            sortedData.map((item) => (
+              <TableRow key={item.id}>
+                <TableCell className="max-w-[160px] truncate">{item.id}</TableCell>
+                <TableCell>{item.rating}</TableCell>
+                <TableCell className="max-w-[200px] truncate text-muted-foreground">
+                  {item.feedback || <span className="italic text-gray-400">No feedback</span>}
+                </TableCell>
+                <TableCell>{new Date(item.createdAt).toLocaleString()}</TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={4} className="text-center text-muted-foreground py-6">
+                No responses yet.
               </TableCell>
-              <TableCell>{new Date(item.createdAt).toLocaleString()}</TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
     </div>

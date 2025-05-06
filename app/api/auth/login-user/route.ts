@@ -9,6 +9,7 @@ export async function POST(request: Request) {
     if (!email || !password) {
         return NextResponse.json({
             msg: "Please fill all the fields",
+        },{
             status: 400
         })
     }
@@ -22,6 +23,7 @@ export async function POST(request: Request) {
     if (!user) {
         return NextResponse.json({
             msg: "User not found",
+        }, {
             status: 404
         })
     }
@@ -31,6 +33,7 @@ export async function POST(request: Request) {
     if (!isPasswordValid) {
         return NextResponse.json({
             msg: "Invalid password",
+        }, {
             status: 401
         })
     }
@@ -41,7 +44,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
         msg: "Login successful",
-        status: 200,
         token
+    },{
+        status: 200
     })
 }

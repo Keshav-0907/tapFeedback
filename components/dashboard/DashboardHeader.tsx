@@ -12,6 +12,8 @@ import {
 import useAuth from '@/hooks/useAuth'
 import { Skeleton } from "@/components/ui/skeleton"
 import { toast } from 'sonner'
+import Avtar from '@/public/Avtar.png'
+import Image from 'next/image'
 
 const DashboardHeader = () => {
   const { user, loading, logout } = useAuth()
@@ -22,7 +24,7 @@ const DashboardHeader = () => {
   }
 
   return (
-    <div className='bg-[#18181B] py-3 px-4 border-b flex justify-end'>
+    <div className='py-3 px-4 border-b flex justify-end'>
       <DropdownMenu>
         <DropdownMenuTrigger className='outline-none cursor-pointer'>
           <div className='flex items-center gap-4'>
@@ -32,13 +34,27 @@ const DashboardHeader = () => {
                 <Skeleton className="h-10 w-10 rounded-full" />
               </>
             ) : (
-              <>
-                <div className='text-sm font-semibold'>Hi, {user?.name}</div>
-                <Avatar>
-                  <AvatarImage src={"https://github.com/shadcn.png"} />
-                  <AvatarFallback>{user?.name?.[0]?.toUpperCase() || 'U'}</AvatarFallback>
-                </Avatar>
-              </>
+              <DropdownMenu>
+                <DropdownMenuTrigger className='outline-none cursor-pointer'>
+                  <div className='flex items-center gap-2'>
+                    <Image src={Avtar} alt='avatar' width={32} height={32} className='rounded-full cursor-pointer' />
+                    <div className='flex iterms flex-col'>
+                      <div className='text-sm font-semibold text-start'> {user?.name} </div>
+                      <div className='text-xs'> {user?.email} </div>
+                    </div>
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>Your Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem disabled>Profile</DropdownMenuItem>
+                  <DropdownMenuItem disabled>Billing</DropdownMenuItem>
+                  <DropdownMenuItem disabled>Team</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => logout()} className='text-red-500'>
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             )}
           </div>
         </DropdownMenuTrigger>

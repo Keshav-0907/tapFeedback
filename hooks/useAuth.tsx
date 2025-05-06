@@ -2,6 +2,7 @@
 import { use, useEffect, useState } from "react";
 import axios from "axios";
 import { User } from "@/types";
+import { toast } from "sonner";
 
 const useAuth = () => {
     const [user, setUser] = useState<User | null>(null);
@@ -40,9 +41,7 @@ const useAuth = () => {
                 password
             })
 
-            localStorage.setItem("authToken", res.data.token);
-            window.location.href = "/";
-            return res.data;
+            return res;
         } catch (error) {
             console.error("Login error:", error);
             return null;
@@ -53,6 +52,7 @@ const useAuth = () => {
         try {
             localStorage.removeItem("authToken");
             setUser(null);
+            toast.success("Logged out successfully");
             window.location.href = "/";
         } catch (error) {
             console.error("Logout error:", error);

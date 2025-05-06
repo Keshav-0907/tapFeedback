@@ -17,7 +17,7 @@ interface AuthModalProps {
 
 const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
     const modalRef = useRef<HTMLDivElement>(null);
-    const {login} = useAuth()
+    const { login } = useAuth()
 
     const [mode, setMode] = useState<"signin" | "signup">("signin");
     const [name, setName] = useState("");
@@ -26,7 +26,6 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
 
-    // Close on click outside
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
@@ -42,44 +41,48 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
         setName("");
         setEmail("");
         setPassword("");
-        setShowPassword(false);
     }
 
     const handleSubmit = async () => {
+
+        if (password.length < 6) {
+            toast.info('Password must be at least 6 characters')
+            return;
+        }
+
         if (mode === "signin") {
+            if (!email || !password) {
+                toast.info('Please fill all the fields')
+                return;
+            }
+
             const res = await login(email, password);
-            if (res) {
-                if (res.status === 200) {
-                    toast.success(res.msg, {
-                        description: "Logged in successfully",
-                    })
-                    setShowAuthModal(false);
-                    resetForm();
-                }
-            } else {
-                toast.error("Invalid credentials", {
-                    description: "Please check your email and password",
+
+            if (res?.status === 200) {
+                toast.success(res.data.msg, {
+                    description: "Login successful",
                 })
-                setError("Invalid credentials");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000)
+                localStorage.setItem("authToken", res.data.token);
+                setShowAuthModal(false);
+                resetForm();
+            }
+            else {
+                toast.error('Invalid Email or Password')
+                setError("Invalid Email or Password");
                 setTimeout(() => {
                     setError("");
                 }, 3000);
             }
         } else {
-
             if (!name || !email || !password) {
-                toast.info('Please fill all the fields', {
-                    description: "All fields are required",
-                })
+                toast.info('Please fill all the fields')
                 return;
             }
 
-            if (password.length < 6) {
-                toast.info('Password must be at least 6 characters', {
-                    description: "Password must be at least 6 characters",
-                })
-                return;
-            }
+
             const res = await axios.post("/api/auth/create-user", {
                 name,
                 email,
@@ -122,7 +125,6 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
                                 <Label htmlFor="password">Name</Label>
                                 <div className="relative">
                                     <Input
-                                        placeholder="John Doe"
                                         type="text"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
@@ -137,7 +139,6 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
                         <Input
                             id="email"
                             type="email"
-                            placeholder="you@example.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -149,7 +150,6 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
                             <Input
                                 id="password"
                                 type={showPassword ? "text" : "password"}
-                                placeholder="••••••••"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
@@ -170,9 +170,10 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
                         )
                     }
 
-                    <Button onClick={handleSubmit} className="w-full">
+                    <Button onClick={handleSubmit} className="w-full cursor-pointer">
                         {mode === "signin" ? "Login" : "Create Account"}
                     </Button>
+                    
                 </CardContent>
 
 

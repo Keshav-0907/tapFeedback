@@ -3,8 +3,6 @@
 import Appearance from '@/components/dashboard/Appearance';
 import GetStarted from '@/components/dashboard/GetStarted';
 import Settings from '@/components/dashboard/Settings';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import axios from 'axios';
 import { Popup } from '@/types';
 import { useParams } from 'next/navigation';
