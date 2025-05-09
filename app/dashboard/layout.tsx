@@ -1,4 +1,5 @@
 'use client'
+import Loader from "@/components/common/Loader";
 import Sidebar from "@/components/common/Sidebar";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import useAuth from "@/hooks/useAuth";
@@ -15,7 +16,7 @@ export default function DashboardLayout({
     if(loading) {
         return (
             <div className="flex items-center justify-center h-screen">
-                Loading
+                <Loader/>
             </div>
         )
     }

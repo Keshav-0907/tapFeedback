@@ -297,15 +297,15 @@ const Appearance = ({ popupId }: AppearanceProps) => {
               <Label>Border Width</Label>
               <Input value={popupStyles?.borderWidth || ''} onChange={(e) => setPopupStyles({ ...popupStyles!, borderWidth: e.target.value })} />
             </div>
-            <div className="flex gap-4">
+            {/* <div className="flex gap-4">
               <div className="flex flex-col gap-2">
                 <Label>Border Color</Label>
                 <ColorPicker
-  value={popupStyles?.borderColor || '#000000'}
-  onChange={(newColor) =>
-    setPopupStyles({ ...popupStyles!, borderColor: newColor })
-  }
-/>
+                  value={popupStyles?.borderColor || '#000000'}
+                  onChange={(newColor) =>
+                    setPopupStyles({ ...popupStyles!, borderColor: newColor })
+                  }
+                />
               </div>
               <div className="flex flex-col gap-2">
                 <Label>Border Radius</Label>
@@ -318,6 +318,32 @@ const Appearance = ({ popupId }: AppearanceProps) => {
                   }}
                 />
               </div>
+            </div> */}
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label>Border Radius</Label>
+            <div className="flex gap-2 items-center">
+              <Button onClick={() => {
+                const size = Math.max((parseInt(popupStyles?.titleSize || '16') || 16) - 1, 10);
+                setPopupStyles({ ...popupStyles!, titleSize: `${size}` });
+              }}>
+                <Minus />
+              </Button>
+              <Input
+                readOnly
+                className="w-20"
+                value={`${popupStyles?.titleSize || '16'}px`}
+                onChange={(e) => {
+                  const size = parseInt(e.target.value.replace('px', ''));
+                  if (!isNaN(size)) setPopupStyles({ ...popupStyles!, titleSize: `${size}` });
+                }}
+              />
+              <Button onClick={() => {
+                const size = Math.min((parseInt(popupStyles?.titleSize || '16') || 16) + 1, 50);
+                setPopupStyles({ ...popupStyles!, titleSize: `${size}` });
+              }}>
+                <Plus />
+              </Button>
             </div>
           </div>
         </Card>

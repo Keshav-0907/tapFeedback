@@ -18,6 +18,7 @@ const Project = () => {
   const [project, setProject] = useState({});
   const [activeTab, setActiveTab] = useState('get-started');
   const [popUp, setPopup] = useState<Popup | undefined>();
+  const currentUrl = typeof window !== 'undefined' ? window.location.origin : '';
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -55,7 +56,7 @@ const Project = () => {
   const embedCode = `
 useEffect(() => {
   const script = document.createElement("script");
-  script.src = "http://localhost:3000/embed/${popUp.id}";
+  script.src = "${currentUrl}/embed/${popUp.id}";
   script.async = true;
   document.body.appendChild(script);
 

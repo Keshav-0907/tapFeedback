@@ -1,14 +1,9 @@
 'use client';
 
-import { use, useEffect, useState } from "react";
-import axios from "axios";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 import AuthModal from "@/components/common/AuthModal";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { DotPattern } from "@/components/magicui/dot-pattern";
-import Headline from "@/components/landing/Headline";
 import Demo from "@/components/landing/Demo";
 import Footer from "@/components/landing/Footer";
 import LandingHeader from "@/components/landing/LandingHeader";

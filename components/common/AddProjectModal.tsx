@@ -8,13 +8,15 @@ import { Button } from '../ui/button';
 import useAuth from '@/hooks/useAuth';
 import { toast } from "sonner"
 import axios from 'axios';
+import Loader from './Loader';
 
 interface AddProjectModalProps {
     setShowAddProjectModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AddProjectModal = ({ setShowAddProjectModal } : AddProjectModalProps) => {
+const AddProjectModal = ({ setShowAddProjectModal }: AddProjectModalProps) => {
     const modalRef = useRef<HTMLDivElement>(null);
+    const [loading, setLoading] = useState(false);
     const [projectTitle, setProjectTitle] = useState("");
     const [projectURL, setProjectURL] = useState("");
     const [isValidURL, setIsValidURL] = useState(true);
@@ -44,13 +46,16 @@ const AddProjectModal = ({ setShowAddProjectModal } : AddProjectModalProps) => {
     };
 
     const handleProjectSubmit = async () => {
+        setLoading(true);
         if (!projectTitle || !projectURL) {
             toast.error('Please fill all the fields')
+            setLoading(false);
             return;
         }
         if (!validateURL(projectURL)) {
             setIsValidURL(false);
             toast.error('Please enter a valid URL')
+            setLoading(false);
             return;
         }
 
@@ -63,10 +68,13 @@ const AddProjectModal = ({ setShowAddProjectModal } : AddProjectModalProps) => {
         if (res.status === 201) {
             toast.success('Project created successfully')
             setShowAddProjectModal(false);
+            setLoading(false);
+            window.location.reload();
             return;
         }
 
         toast.error('Project creation failed')
+        setLoading(false);
         return;
     }
 
@@ -77,7 +85,7 @@ const AddProjectModal = ({ setShowAddProjectModal } : AddProjectModalProps) => {
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/40">
             <Card ref={modalRef} className="w-full max-w-md">
                 <CardHeader className='flex justify-between items-center'>
-                    <div>
+                    <div className='font-semibold'>
                         Create New Project
                     </div>
 
@@ -102,10 +110,16 @@ const AddProjectModal = ({ setShowAddProjectModal } : AddProjectModalProps) => {
                 </CardContent>
 
                 <CardFooter>
-                    <Button onClick={handleProjectSubmit} className='cursor-pointer text-white'>
+                    <Button
+                        onClick={handleProjectSubmit}
+                        disabled={loading}
+                        className="relative flex items-center justify-center gap-2 text-white cursor-pointer"
+                    >
+                        {loading && <span className="w-4 h-4 animate-spin border-2 border-white border-t-transparent rounded-full" />}
                         Create Project
                     </Button>
                 </CardFooter>
+
             </Card>
         </div>
     )
