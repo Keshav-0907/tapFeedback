@@ -34,7 +34,7 @@ const ProjectCard = ({ project }: { project: any }) => {
                 </div>
 
                 <div className="text-xs text-accent-foreground">
-                    {project.url}
+                    {project.url.length > 30 ? `${project.url.slice(0, 30)}...` : project.url}
                     {/* {getCurrentDate({ date: project.createdAt })} */}
                 </div>
             </div>

@@ -63,7 +63,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
                     description: "Login successful",
                 })
                 setTimeout(() => {
-                    window.location.reload();
+                    window.location.href = "/dashboard/project";
                 }, 1000)
                 localStorage.setItem("authToken", res.data.token);
                 setShowAuthModal(false);

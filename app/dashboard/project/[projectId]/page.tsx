@@ -73,7 +73,7 @@ useEffect(() => {
       case 'appearance':
         return <Appearance popupId={popUp.id} />
       case 'settings':
-        return <Settings />
+        return <Settings projectId={popUp.projectId}/>
       case 'responses':
         return <Responses popupId={popUp.id}/>
       default:

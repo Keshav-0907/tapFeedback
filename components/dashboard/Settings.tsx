@@ -2,8 +2,35 @@ import { Separator } from '../ui/separator'
 import React from 'react'
 import { Button } from '../ui/button'
 import { Trash } from 'lucide-react'
+import useAuth from '@/hooks/useAuth'
+import axios from 'axios'
+import { toast } from 'sonner'
 
-const Settings = () => {
+interface SettingsProps {
+  projectId: string
+}
+
+const Settings = ({projectId} : SettingsProps) => {
+  const {user} = useAuth()
+
+  const handleDeleteProject = async () => {
+    const res = await axios.delete('/api/project/delete-project', {
+      data: {
+        projectId: projectId,
+        userId: user?.id,
+      }
+    })
+
+    if (res.status === 200) {
+      toast.success('Project deleted successfully')
+      setTimeout(() => {
+        window.location.href = '/dashboard/project'
+      }, 2000)
+    } else {
+      toast.error('Error deleting project')
+    }
+  }
+
   return (
     <div className='px-8 py-4 space-y-8'>
        <div className="p-5 border border-red-500 bg-red-50 rounded-md space-y-4">
@@ -20,7 +47,7 @@ const Settings = () => {
               This action is irreversible.
             </p>
           </div>
-          <Button variant="destructive" className="bg-red-600 hover:bg-red-700">
+          <Button variant="destructive" className="bg-red-600 hover:bg-red-700" onClick={handleDeleteProject}>
             <Trash className="mr-2 w-4 h-4" />
             Delete Project
           </Button>
