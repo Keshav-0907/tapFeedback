@@ -17,24 +17,26 @@ export default function Home() {
   const router = useRouter()
 
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "http://localhost:3000/embed/cma5s78nf0005ul4azmvik155";
-    script.async = true;
-    document.body.appendChild(script);
+  
+// useEffect(() => {
+//   const script = document.createElement("script");
+//   script.src = "http://localhost:3000/embed/cmal074820004ullkio8h1hvu";
+//   script.async = true;
+//   document.body.appendChild(script);
 
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
+//   return () => {
+//     document.body.removeChild(script);
+//   };
+// }, []);
+  
 
 
   return (
     <div className="flex flex-col justify-center items-center">
       <LandingHeader setShowAuthModal={setShowAuthModal} />
       <Hero setShowAuthModal={setShowAuthModal}/>
-       <Demo />
-      <div className="flex justify-between w-full max-w-6xl py-24">
+       {/* <Demo /> */}
+      <div className="flex justify-between w-full max-w-6xl py-12">
         <div className="w-1/2">
           <HowItWorks />
         </div>

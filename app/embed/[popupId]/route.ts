@@ -43,7 +43,7 @@ export async function GET(
         <button onclick="document.getElementById('tap-popup')?.remove()" style="
           background: transparent;
           border: none;
-          color: \${popup.textColor || '#000'};
+          color: \${popup.titleColor || '#000'};
           font-size: 20px;
           cursor: pointer;
           line-height: 1;
@@ -58,7 +58,7 @@ export async function GET(
             return \`
               <div onclick="setRating(\${i})" style='text-align: center; cursor: pointer; user-select: none; color: #ccc;' data-index="\${i}">
                 <div style="font-size: 24px;">\${emojis[i - 1]}</div>
-                <div style="font-size: 10px; margin-top: 4px; color: \${popup.textColor || '#666'};">\${labels[i - 1]}</div>
+                <div style="font-size: 10px; margin-top: 4px; color: \${popup.titleColor || '#666'};">\${labels[i - 1]}</div>
               </div>
             \`;
           }).join('')}
@@ -96,6 +96,12 @@ export async function GET(
       ">
         \${popup.ctaText || 'Submit'}
       </button>
+      <div style="margin-top: 5px; font-size: 12px; color: \${popup.titleColor || '#666'}; display: flex; justify-content: center; align-items: center; gap: 4px;">
+        <div>Powered by</div>
+        <a href="https://tap-feedback.vercel.app" target="_blank" style="font-size: 12px; font-style: italic; font-weight: 600; text-decoration: none; color: \${popup.titleColor || '#666'};">
+          Tap Feedback
+        </a>
+      </div>
     </div>
   \`;
 

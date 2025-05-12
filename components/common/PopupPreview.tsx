@@ -1,4 +1,5 @@
 import { Popup } from '@/types';
+import Link from 'next/link';
 import React, { useState } from 'react';
 
 type PopupPreviewProps = {
@@ -21,7 +22,7 @@ const PopupPreview = ({ popupStyles, setPopupStyles }: PopupPreviewProps) => {
         backgroundColor: popupStyles?.backgroundColor || '#fff',
         color: popupStyles?.textColor || '#000',
         fontFamily: 'Inter, sans-serif',
-        padding: '20px',
+        padding: '10px 20px',
         borderRadius: `${popupStyles?.borderRadius}px`,
         position: 'fixed',
         ...(popupStyles?.position === 'top-left' && { top: '10px', left: '10px' }),
@@ -133,38 +134,50 @@ const PopupPreview = ({ popupStyles, setPopupStyles }: PopupPreviewProps) => {
       )}
 
       {/* Submit Button */}
-      <button
-        disabled={rating === 0}
-        onClick={() => {
-          setIsSubmitted(true);
-          setTimeout(() => {
-            document.getElementById('tap-popup')?.remove();
-          }, 500); // allow time for fade-out animation
-        }}
-        style={{
-          marginTop: '14px',
-          width: '100%',
-          padding: '10px 16px',
-          backgroundColor: popupStyles?.ctaBackgroundColor || '#000',
-          color: popupStyles?.ctaTextColor || '#fff',
-          border: 'none',
-          borderRadius: '6px',
-          cursor: rating === 0 ? 'not-allowed' : 'pointer',
-          fontWeight: 600,
-          fontSize: '14px',
-          opacity: rating === 0 ? 0.6 : 1,
-          transition: 'all 0.2s',
-        }}
-        onMouseOver={(e) => {
-          if (rating !== 0) e.currentTarget.style.opacity = '0.9';
-        }}
-        onMouseOut={(e) => {
-          if (rating !== 0) e.currentTarget.style.opacity = '1';
-        }}
-      >
-        {popupStyles?.ctaText || 'Submit'}
-      </button>
+      <div className='flex flex-col'>
+        <button
+          disabled={rating === 0}
+          onClick={() => {
+            setIsSubmitted(true);
+            setTimeout(() => {
+              document.getElementById('tap-popup')?.remove();
+            }, 500); // allow time for fade-out animation
+          }}
+          style={{
+            marginTop: '14px',
+            width: '100%',
+            padding: '10px 16px',
+            backgroundColor: popupStyles?.ctaBackgroundColor || '#000',
+            color: popupStyles?.ctaTextColor || '#fff',
+            border: 'none',
+            borderRadius: '6px',
+            cursor: rating === 0 ? 'not-allowed' : 'pointer',
+            fontWeight: 600,
+            fontSize: '14px',
+            opacity: rating === 0 ? 0.6 : 1,
+            transition: 'all 0.2s',
+          }}
+          onMouseOver={(e) => {
+            if (rating !== 0) e.currentTarget.style.opacity = '0.9';
+          }}
+          onMouseOut={(e) => {
+            if (rating !== 0) e.currentTarget.style.opacity = '1';
+          }}
+        >
+          {popupStyles?.ctaText || 'Submit'}
+        </button>
 
+        <div className='flex justify-center items-center'>
+          <div style={{ marginTop: '5px', fontSize: '12px', color: popupStyles?.titleColor, display: 'flex', gap: '4px', alignItems: 'center' }}>
+            <div> Powered by</div>
+            <Link href={'https://tap-feedback.vercel.app'} target='_blank' className='text-xs font-semibold italic font-serif'>
+              Tap Feedback
+            </Link>
+
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 };
