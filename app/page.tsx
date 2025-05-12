@@ -18,16 +18,17 @@ export default function Home() {
 
 
   
-// useEffect(() => {
-//   const script = document.createElement("script");
-//   script.src = "http://localhost:3000/embed/cmal074820004ullkio8h1hvu";
-//   script.async = true;
-//   document.body.appendChild(script);
 
-//   return () => {
-//     document.body.removeChild(script);
-//   };
-// }, []);
+useEffect(() => {
+  const script = document.createElement("script");
+  script.src = "https://tap-feedback.vercel.app/embed/cmal074820004ullkio8h1hvu";
+  script.async = true;
+  document.body.appendChild(script);
+
+  return () => {
+    document.body.removeChild(script);
+  };
+}, []);
   
 
 

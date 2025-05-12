@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import axios from "axios";
+import { toast } from "sonner";
 
 export async function GET(
   req: NextRequest,
@@ -7,7 +8,7 @@ export async function GET(
   const popupId = req.nextUrl.pathname.split("/").pop();
 
   try {
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_SITE_URL}/api/popup/get-popup`, {
+    const res = await axios.post(`https://tap-feedback.vercel.app/api/popup/get-popup`, {
       popupId,
     });
 
@@ -128,7 +129,7 @@ export async function GET(
     const feedbackText = document.getElementById('feedbackText')?.value || "";
 
     try {
-      await fetch('${process.env.NEXT_PUBLIC_SITE_URL}/api/popup/submit-popup', {
+      await fetch('https://tap-feedback.vercel.app/api/popup/submit-popup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -138,10 +139,9 @@ export async function GET(
         }),
       });
 
-      alert('Thank you for your feedback!');
+      toast.success('Thank you for your feedback!');
     } catch (err) {
       console.error('Failed to submit feedback:', err);
-      alert('There was an error submitting your feedback.');
     }
 
     document.getElementById('tap-popup')?.remove();
