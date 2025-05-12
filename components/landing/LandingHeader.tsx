@@ -23,16 +23,16 @@ const LandingHeader = ({ setShowAuthModal }: LandingHeaderProps) => {
   const { user, loading, logout } = useAuth()
 
   return (
-    <div className='fixed top-0 left-0 w-full z-50 backdrop-blur bg-white/70 px-40 py-4 flex justify-between items-center border-b border-gray-200'>
+    <div className='fixed top-0 left-0 w-full z-50 backdrop-blur bg-white/70 px-40 py-2 flex justify-between items-center border-b border-gray-200'>
       <div className='text-lg font-semibold text-[#000000] italic font-serif'>
         Tap Feedback
       </div>
 
       <div className='flex items-center gap-10 text-sm'>
-        <div className='flex items-center gap-8 font-semibold'>
+        {/* <div className='flex items-center gap-8 font-semibold'>
           <div className='cursor-pointer'> Features </div>
           <div className='cursor-pointer'>  Pricing </div>
-        </div>
+        </div> */}
         <div>
           {
             user ? (
