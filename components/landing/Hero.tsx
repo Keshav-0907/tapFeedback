@@ -25,7 +25,7 @@ const Hero = () => {
                     "absolute inset-0 -z-10 [mask-image:radial-gradient(300px_circle_at_center,white,transparent)]"
                 )}
             />
-            <div className="z-50 w-fit flex flex-col gap-10 h-screen items-center justify-center">
+            <div className="z-50 w-fit flex flex-col gap-10 h-[80vh] items-center justify-center">
                 <Headline text="Introducing SitePop" />
 
 
@@ -59,8 +59,6 @@ const Hero = () => {
                             See Demo 🎥
                         </Button>
                     </div>
-
-
                 </div>
             </div>
         </div>

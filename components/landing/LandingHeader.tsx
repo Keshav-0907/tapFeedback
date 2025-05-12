@@ -24,8 +24,8 @@ const LandingHeader = ({ setShowAuthModal }: LandingHeaderProps) => {
 
   return (
     <div className='fixed top-0 left-0 w-full z-50 backdrop-blur bg-white/70 px-40 py-4 flex justify-between items-center border-b border-gray-200'>
-      <div className='text-xl font-bold text-gray-800'>
-        SitePop
+      <div className='text-lg font-semibold text-[#000000] italic font-serif'>
+        Tap Feedback
       </div>
 
       <div className='flex items-center gap-10 text-sm'>
@@ -47,11 +47,8 @@ const LandingHeader = ({ setShowAuthModal }: LandingHeaderProps) => {
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuLabel>Your Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem disabled>Profile</DropdownMenuItem>
-                  <DropdownMenuItem disabled>Billing</DropdownMenuItem>
-                  <DropdownMenuItem disabled>Team</DropdownMenuItem>
+                  <DropdownMenuItem>Settings</DropdownMenuItem>
                   <DropdownMenuItem onClick={() => logout()} className='text-red-500'>
                     Logout
                   </DropdownMenuItem>

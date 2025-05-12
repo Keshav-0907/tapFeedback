@@ -55,7 +55,6 @@ model Popup {
   ctaText            String?
   ctaTextColor       String?
   ctaBackgroundColor String?
-  delay              Int?
   position           String?
   entryAnimation     String?
   exitAnimation      String?

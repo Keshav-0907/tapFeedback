@@ -54,6 +54,10 @@ export async function POST(request: Request) {
   const popup = await prisma.popup.create({
     data: {
       projectId: project.id,
+      description: "Let us know what you think. Your feedback helps us improve!",
+      descriptionSize: "14",
+      descriptionColor: "#000000",
+      position: "bottom-right",
       title: "We value your feedback!",
       titleSize: "20",
       titleColor: "#000000",
@@ -67,7 +71,6 @@ export async function POST(request: Request) {
       ctaText: "Submit",
       ctaTextColor: "#ffffff",
       ctaBackgroundColor: "#000000",
-      delay: 5,
       entryAnimation: "fade-in",
       exitAnimation: "fade-out"
     }

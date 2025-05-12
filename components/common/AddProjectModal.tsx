@@ -89,7 +89,7 @@ const AddProjectModal = ({ setShowAddProjectModal }: AddProjectModalProps) => {
                         Create New Project
                     </div>
 
-                    <X size={16} />
+                    <X size={16} onClick={()=>setShowAddProjectModal(false)} className='cursor-pointer' />
                 </CardHeader>
 
                 <CardContent className='flex flex-col gap-4'>

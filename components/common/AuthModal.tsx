@@ -173,21 +173,36 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
                     <Button onClick={handleSubmit} className="w-full cursor-pointer">
                         {mode === "signin" ? "Login" : "Create Account"}
                     </Button>
-                    
+
                 </CardContent>
 
 
 
-                <CardFooter className="flex gap-1 text-center text-xs">
-                    <p className="text-muted-foreground">
-                        {mode === "signin" ? "Don't have an account?" : "Already have an account?"}
-                    </p>
-                    <div
-                        className="cursor-pointer hover:text-primary"
-                        onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-                    >
-                        {mode === "signin" ? "Sign Up" : "Sign In"}
+                <CardFooter className="flex flex-col gap-1 items-start text-xs">
+                    <div className="flex gap-1">
+                        <p className="text-muted-foreground">
+                            {mode === "signin" ? "Don't have an account?" : "Already have an account?"}
+                        </p>
+
+                        <div
+                            className="cursor-pointer hover:text-primary"
+                            onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
+                        >
+                            {mode === "signin" ? "Sign Up" : "Sign In"}
+                        </div>
                     </div>
+                    {/* <div className="flex gap-1">
+                        <p className="text-muted-foreground">
+                            Just want to try it out?
+                        </p>
+
+                        <div
+                            className="cursor-pointer hover:text-primary"
+                            onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
+                        >
+                            Demo Login
+                        </div>
+                    </div> */}
                 </CardFooter>
             </Card>
         </div>

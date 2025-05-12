@@ -20,6 +20,11 @@ import { Button } from '../ui/button';
 import { Minus, Plus } from 'lucide-react';
 import { toast } from 'sonner';
 import { ColorPicker } from '../common/ColorPicker';
+import TitleSettings from '../apperarance/TitleSettings';
+import DescriptionSettings from '../apperarance/DescriptionSettings';
+import DisplaySettings from '../apperarance/DisplaySettings';
+import CtaSettings from '../apperarance/CtaSettings';
+import BehaviorAnimationSettings from '../apperarance/BehaviorAnimationSettings';
 
 interface AppearanceProps {
   popupId: string;
@@ -71,7 +76,7 @@ const Appearance = ({ popupId }: AppearanceProps) => {
     });
 
     if (res.status === 200) {
-      alert('Popup styles updated successfully!');
+      toast.success('Popup updated successfully!');
       setInitialStyles(popupStyles);
       setStyleChanged(false);
     }
@@ -117,236 +122,21 @@ const Appearance = ({ popupId }: AppearanceProps) => {
 
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         {/* Title Settings */}
-        <Card className="p-4">
-          <div>
-            <h3 className="font-medium">Title Settings</h3>
-            <p className="text-muted-foreground text-xs">Customize the title of your widget.</p>
-          </div>
-          <Separator />
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label>Title Text</Label>
-              <Input value={popupStyles?.title || ''} onChange={(e) => setPopupStyles({ ...popupStyles!, title: e.target.value })} />
-            </div>
-            <div className="flex gap-4">
-              <div className="flex flex-col gap-2">
-                <Label>Title Color</Label>
-                <ColorPicker
-                  value={popupStyles?.titleColor || '#000000'}
-                  onChange={(newColor) =>
-                    setPopupStyles({ ...popupStyles!, titleColor: newColor })
-                  }
-                />
+        <TitleSettings popupStyles={popupStyles} setPopupStyles={setPopupStyles} />
 
-              </div>
-              <div className="flex flex-col gap-2">
-                <Label>Title Size</Label>
-                <div className="flex gap-2 items-center">
-                  <Button onClick={() => {
-                    const size = Math.max((parseInt(popupStyles?.titleSize || '16') || 16) - 1, 10);
-                    setPopupStyles({ ...popupStyles!, titleSize: `${size}` });
-                  }}>
-                    <Minus />
-                  </Button>
-                  <Input
-                    readOnly
-                    className="w-20"
-                    value={`${popupStyles?.titleSize || '16'}px`}
-                    onChange={(e) => {
-                      const size = parseInt(e.target.value.replace('px', ''));
-                      if (!isNaN(size)) setPopupStyles({ ...popupStyles!, titleSize: `${size}` });
-                    }}
-                  />
-                  <Button onClick={() => {
-                    const size = Math.min((parseInt(popupStyles?.titleSize || '16') || 16) + 1, 50);
-                    setPopupStyles({ ...popupStyles!, titleSize: `${size}` });
-                  }}>
-                    <Plus />
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
+        {/* Description Settings */}
+        <DescriptionSettings popupStyles={popupStyles} setPopupStyles={setPopupStyles} />
 
         {/* Display Settings */}
-        <Card className="p-4">
-          <div>
-            <h3 className="font-medium">Display Settings</h3>
-            <p className="text-muted-foreground text-xs">Customize the background and position of your widget.</p>
-          </div>
-          <Separator />
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label>Background Color</Label>
-              <ColorPicker
-                value={popupStyles?.backgroundColor || '#ffffff'}
-                onChange={(newColor) =>
-                  setPopupStyles({ ...popupStyles!, backgroundColor: newColor })
-                }
-              />
-            </div>
-            <div className='flex justify-between'>
-              <div className="space-y-2">
-                <Label>Popup Position</Label>
-                <Select disabled={true}>
-                  <SelectTrigger><SelectValue placeholder="Select position" /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="top-right">Top Right</SelectItem>
-                    <SelectItem value="top-left">Top Left</SelectItem>
-                    <SelectItem value="bottom-right">Bottom Right</SelectItem>
-                    <SelectItem value="bottom-left">Bottom Left</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label>Animation</Label>
-                <Select
-                  onValueChange={(value) => {
-                    setShowPopupPreview(false);
-                    setPopupStyles({ ...popupStyles!, entryAnimation: value });
-                    setTimeout(() => setShowPopupPreview(true), 100);
-                  }}
-                >
-                  <SelectTrigger><SelectValue placeholder="Select animation" /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="fade-in">Fade In</SelectItem>
-                    <SelectItem value="slide-in-left">Slide In Left</SelectItem>
-                    <SelectItem value="slide-in-right">Slide In Right</SelectItem>
-                    <SelectItem value="zoom-in">Zoom In</SelectItem>
-                    <SelectItem value="bounce-in">Bounce In</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </div>
-        </Card>
+        <DisplaySettings popupStyles={popupStyles} setPopupStyles={setPopupStyles} />
 
         {/* CTA Settings */}
-        <Card className="p-4">
-          <div>
-            <h3 className="font-medium">CTA Settings</h3>
-            <p className="text-muted-foreground text-xs">Customize the CTA of your widget.</p>
-          </div>
-          <Separator />
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label>CTA Text</Label>
-              <Input value={popupStyles?.ctaText || ''} onChange={(e) => setPopupStyles({ ...popupStyles!, ctaText: e.target.value })} />
-            </div>
-            <div className="flex gap-4">
-              <div className="flex flex-col gap-2 w-full">
-                <Label>CTA Text Color</Label>
-                <ColorPicker
-                  value={popupStyles?.ctaTextColor || '#000000'}
-                  onChange={(newColor) =>
-                    setPopupStyles({ ...popupStyles!, ctaTextColor: newColor })
-                  }
-                />
-              </div>
-              <div className="flex flex-col gap-2 w-full">
-                <Label>CTA Background Color</Label>
-                <ColorPicker
-                  value={popupStyles?.ctaBackgroundColor || '#000000'}
-                  onChange={(newColor) =>
-                    setPopupStyles({ ...popupStyles!, ctaBackgroundColor: newColor })
-                  }
-                />
-              </div>
-            </div>
-          </div>
-        </Card>
+        <CtaSettings popupStyles={popupStyles} setPopupStyles={setPopupStyles} />
 
         {/* Misc Settings */}
-        <Card className="p-4">
-          <div>
-            <h3 className="font-medium">Miscellaneous</h3>
-            <p className="text-muted-foreground text-xs">Additional popup behavior options.</p>
-          </div>
-          <Separator />
-          <div className="flex justify-between">
-            <div className="flex flex-col gap-2">
-              <Label>Show Text Input</Label>
-              <Switch
-                checked={popupStyles?.showTextInput || false}
-                onCheckedChange={(checked) => setPopupStyles({ ...popupStyles!, showTextInput: checked })}
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label>Delay to open popup (ms)</Label>
-              <Input
-                disabled={true}
-                value={popupStyles?.delay?.toString() || ''}
-                onChange={(e) => setPopupStyles({ ...popupStyles!, delay: parseInt(e.target.value) || 0 })}
-              />
-            </div>
-          </div>
-        </Card>
-
-        {/* Border Settings */}
-        <Card className="p-4">
-          <div>
-            <h3 className="font-medium">Border Settings</h3>
-            <p className="text-muted-foreground text-xs">Customize the border appearance of your widget.</p>
-          </div>
-          <Separator />
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label>Border Width</Label>
-              <Input value={popupStyles?.borderWidth || ''} onChange={(e) => setPopupStyles({ ...popupStyles!, borderWidth: e.target.value })} />
-            </div>
-            {/* <div className="flex gap-4">
-              <div className="flex flex-col gap-2">
-                <Label>Border Color</Label>
-                <ColorPicker
-                  value={popupStyles?.borderColor || '#000000'}
-                  onChange={(newColor) =>
-                    setPopupStyles({ ...popupStyles!, borderColor: newColor })
-                  }
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <Label>Border Radius</Label>
-                <Input
-                  className="w-20"
-                  value={`${popupStyles?.borderRadius || '0'}px`}
-                  onChange={(e) => {
-                    const val = parseInt(e.target.value.replace('px', ''));
-                    if (!isNaN(val)) setPopupStyles({ ...popupStyles!, borderRadius: `${val}` });
-                  }}
-                />
-              </div>
-            </div> */}
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label>Border Radius</Label>
-            <div className="flex gap-2 items-center">
-              <Button onClick={() => {
-                const size = Math.max((parseInt(popupStyles?.titleSize || '16') || 16) - 1, 10);
-                setPopupStyles({ ...popupStyles!, titleSize: `${size}` });
-              }}>
-                <Minus />
-              </Button>
-              <Input
-                readOnly
-                className="w-20"
-                value={`${popupStyles?.titleSize || '16'}px`}
-                onChange={(e) => {
-                  const size = parseInt(e.target.value.replace('px', ''));
-                  if (!isNaN(size)) setPopupStyles({ ...popupStyles!, titleSize: `${size}` });
-                }}
-              />
-              <Button onClick={() => {
-                const size = Math.min((parseInt(popupStyles?.titleSize || '16') || 16) + 1, 50);
-                setPopupStyles({ ...popupStyles!, titleSize: `${size}` });
-              }}>
-                <Plus />
-              </Button>
-            </div>
-          </div>
-        </Card>
+        <BehaviorAnimationSettings popupStyles={popupStyles} setPopupStyles={setPopupStyles} setShowPopupPreview={setShowPopupPreview}/>
       </div>
 
       {showPopupPreview && popupStyles && (

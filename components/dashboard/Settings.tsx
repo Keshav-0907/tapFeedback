@@ -1,5 +1,5 @@
 import { Separator } from '../ui/separator'
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from '../ui/button'
 import { Trash } from 'lucide-react'
 import useAuth from '@/hooks/useAuth'
@@ -10,10 +10,12 @@ interface SettingsProps {
   projectId: string
 }
 
-const Settings = ({projectId} : SettingsProps) => {
-  const {user} = useAuth()
+const Settings = ({ projectId }: SettingsProps) => {
+  const { user } = useAuth()
+  const [loading, setLoading] = useState(false)
 
   const handleDeleteProject = async () => {
+    setLoading(true)
     const res = await axios.delete('/api/project/delete-project', {
       data: {
         projectId: projectId,
@@ -23,17 +25,19 @@ const Settings = ({projectId} : SettingsProps) => {
 
     if (res.status === 200) {
       toast.success('Project deleted successfully')
+      setLoading(false)
       setTimeout(() => {
         window.location.href = '/dashboard/project'
-      }, 2000)
+      }, 500)
     } else {
       toast.error('Error deleting project')
+      setLoading(false)
     }
   }
 
   return (
     <div className='px-8 py-4 space-y-8'>
-       <div className="p-5 border border-red-500 bg-red-50 rounded-md space-y-4">
+      <div className="p-5 border border-red-500 bg-red-50 rounded-md space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-red-700">Dangerous Zone</h3>
         </div>
@@ -48,7 +52,7 @@ const Settings = ({projectId} : SettingsProps) => {
             </p>
           </div>
           <Button variant="destructive" className="bg-red-600 hover:bg-red-700" onClick={handleDeleteProject}>
-            <Trash className="mr-2 w-4 h-4" />
+            {loading ? <span className="w-4 h-4 animate-spin border-2 border-white border-t-transparent rounded-full" /> : <Trash className="mr-2 w-4 h-4" />}
             Delete Project
           </Button>
         </div>

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator';
 import useAuth from '@/hooks/useAuth';
 import axios from 'axios';
+import { Plus, PlusCircle } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 
 const Projects = () => {
@@ -45,16 +46,17 @@ const Projects = () => {
         <div className='flex flex-col gap-4 px-2 py-4'>
             <div className='flex justify-end items-center'>
                 <Button variant={'outline'} className="cursor-pointer" onClick={() => setShowAddProjectModal(true)}>
+                    <PlusCircle/>
                     Create New Project
                 </Button>
             </div>
             <div className='flex flex-col gap-8'>
                 <div className='flex flex-col'>
                     <div className='font-semibold text-xl'>
-                        Your Widgets
+                        Your Projects
                     </div>
                     <div className='text-sm text-gray-500'>
-                        Manage all your created widgets in one place. Edit, track responses, or create a new one in seconds.
+                        Manage all your projects in one place. Edit, track responses, or create a new one in seconds.
                     </div>
                 </div>
                 <div>

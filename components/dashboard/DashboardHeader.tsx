@@ -14,13 +14,19 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { toast } from 'sonner'
 import Avtar from '@/public/Avtar.png'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 const DashboardHeader = () => {
   const { user, loading, logout } = useAuth()
+  const router = useRouter()
 
   const handleLogout = async () => {
     await logout()
     toast.success("Logged out successfully")
+  }
+
+  const handleSettingsNavigation = () => {
+    router.push('/dashboard/settings')
   }
 
   return (
@@ -47,9 +53,9 @@ const DashboardHeader = () => {
                 <DropdownMenuContent>
                   <DropdownMenuLabel>Your Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem disabled>Profile</DropdownMenuItem>
-                  <DropdownMenuItem disabled>Billing</DropdownMenuItem>
-                  <DropdownMenuItem disabled>Team</DropdownMenuItem>
+                  <DropdownMenuItem className='cursor-pointer' onClick={handleSettingsNavigation}>
+                    Settings
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => logout()} className='text-red-500'>
                     Logout
                   </DropdownMenuItem>

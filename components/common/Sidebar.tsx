@@ -2,7 +2,8 @@ import { url } from 'inspector'
 import { Cog, FolderOpenDot, House, Info, PlusCircle, Settings, ShieldCheck, TextQuote } from 'lucide-react'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
-import React from 'react'
+import React, { useState } from 'react'
+import AddProjectModal from './AddProjectModal'
 
 const sideBarItems = [
   {
@@ -32,16 +33,20 @@ const mockProjects = [
 
 const Sidebar = () => {
   const currentUrl = usePathname()
+  const [showAddProjectModal, setShowAddProjectModal] = useState(false);
+
 
   return (
     <div className='my-4 ml-4 mr-2 w-52 flex flex-col justify-between bg-white shadow-md rounded-lg border-[1px]'>
       <div className='flex flex-col gap-2 justify-center px-4'>
         <div className='p-4'>
-          Logo Area
+          <Link href={'/dashboard/project'} className='text-lg font-semibold text-[#000000] italic font-serif'>
+            Tap Feedback
+          </Link>
         </div>
 
-        <div className='bg-[#FAFAFA] border-[1px] font-medium hover:border-[#bebebe] cursor-pointer hover:shadow-sm border-[#E1E1E1] py-2 rounded-md text-center flex text-sm gap-2 items-center justify-center'>
-          <PlusCircle size={14}/>
+        <div className='bg-[#FAFAFA] border-[1px] font-medium hover:border-[#bebebe] cursor-pointer hover:shadow-sm border-[#E1E1E1] py-2 rounded-md text-center flex text-sm gap-2 items-center justify-center' onClick={() => setShowAddProjectModal(true)}>
+          <PlusCircle size={14} />
           Create New Project
         </div>
 
@@ -61,14 +66,20 @@ const Sidebar = () => {
 
       </div>
       <div className='px-4 py-2 flex flex-col gap-2 border-t'>
-        <div className='text-sm flex gap-2 items-center cursor-pointer hover:bg-[#F5F5F5] p-1 rounded-sm'>
-          <Info size={14}/> Get Help
-        </div>
+        <Link href={'https://x.com/_keshav_malik'} target='_blank' className='text-sm flex gap-2 items-center cursor-pointer hover:bg-[#F5F5F5] p-1 rounded-sm'>
+          <Info size={14} /> Get Help
+        </Link>
 
-        <div className='text-sm flex gap-2 items-center cursor-pointer hover:bg-[#F5F5F5] p-1 rounded-sm'>
-          <Settings size={14}/> Settings
-        </div>
+        <Link href={'/dashboard/settings'} className='text-sm flex gap-2 items-center cursor-pointer hover:bg-[#F5F5F5] p-1 rounded-sm'>
+          <Settings size={14} /> Settings
+        </Link>
       </div>
+
+      {
+        showAddProjectModal && (
+          <AddProjectModal setShowAddProjectModal={setShowAddProjectModal} />
+        )
+      }
     </div>
   )
 }

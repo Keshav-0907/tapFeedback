@@ -24,8 +24,10 @@ const PopupPreview = ({ popupStyles, setPopupStyles }: PopupPreviewProps) => {
         padding: '20px',
         borderRadius: `${popupStyles?.borderRadius}px`,
         position: 'fixed',
-        bottom: '40px',
-        right: '40px',
+        ...(popupStyles?.position === 'top-left' && { top: '10px', left: '10px' }),
+        ...(popupStyles?.position === 'top-right' && { top: '10px', right: '10px' }),
+        ...(popupStyles?.position === 'bottom-left' && { bottom: '10px', left: '10px' }),
+        ...(popupStyles?.position === 'bottom-right' && { bottom: '10px', right: '10px' }),
         zIndex: 9999,
         boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
         border: `${popupStyles?.borderWidth}px solid ${popupStyles?.borderColor || '#ddd'}`,
@@ -34,6 +36,7 @@ const PopupPreview = ({ popupStyles, setPopupStyles }: PopupPreviewProps) => {
           : `${popupStyles?.entryAnimation || 'fade-in'} 0.4s ease-out`,
         transition: 'all 0.5s ease',
       }}
+
     >
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -61,6 +64,10 @@ const PopupPreview = ({ popupStyles, setPopupStyles }: PopupPreviewProps) => {
         >
           ×
         </button>
+      </div>
+
+      <div style={{ fontSize: `${popupStyles?.descriptionSize || '14'}px`, color: popupStyles?.descriptionColor, lineHeight: 1.2, marginTop: '4px', fontWeight: 500 }}>
+        {popupStyles?.description}
       </div>
 
       {/* Star Rating */}
