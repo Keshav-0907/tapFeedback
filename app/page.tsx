@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <div className="flex flex-col justify-center items-center">
       <LandingHeader setShowAuthModal={setShowAuthModal} />
-      <Hero />
+      <Hero setShowAuthModal={setShowAuthModal}/>
        <Demo />
       <div className="flex justify-between w-full max-w-6xl py-24">
         <div className="w-1/2">

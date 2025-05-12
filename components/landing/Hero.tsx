@@ -7,9 +7,14 @@ import { RoughNotation, RoughNotationGroup } from "react-rough-notation";
 import useAuth from '@/hooks/useAuth'
 import { useRouter } from 'next/navigation'
 
-const Hero = () => {
+interface HeroProps {
+    setShowAuthModal: (show: boolean) => void;
+
+}
+
+const Hero = ({ setShowAuthModal }: HeroProps) => {
     const { user } = useAuth()
-    const router =useRouter()
+    const router = useRouter()
 
     const handleNavigation = () => {
         if (user) {
@@ -50,7 +55,7 @@ const Hero = () => {
                                     Go to Dashboard
                                 </Button>
                             ) : (
-                                <Button className="cursor-pointer">
+                                <Button className="cursor-pointer" onClick={() => setShowAuthModal(true)}>
                                     Get Started Free
                                 </Button>
                             )

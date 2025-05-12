@@ -25,6 +25,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -44,15 +45,18 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
     }
 
     const handleSubmit = async () => {
+        setLoading(true);
 
         if (password.length < 6) {
             toast.info('Password must be at least 6 characters')
+            setLoading(false);
             return;
         }
 
         if (mode === "signin") {
             if (!email || !password) {
                 toast.info('Please fill all the fields')
+                setLoading(false);
                 return;
             }
 
@@ -66,12 +70,14 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
                     window.location.href = "/dashboard/project";
                 }, 1000)
                 localStorage.setItem("authToken", res.data.token);
+                setLoading(false);
                 setShowAuthModal(false);
                 resetForm();
             }
             else {
                 toast.error('Invalid Email or Password')
                 setError("Invalid Email or Password");
+                setLoading(false);
                 setTimeout(() => {
                     setError("");
                 }, 3000);
@@ -79,6 +85,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
         } else {
             if (!name || !email || !password) {
                 toast.info('Please fill all the fields')
+
                 return;
             }
 
@@ -93,6 +100,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
                 toast.success(res.data.msg, {
                     description: "Account created successfully",
                 })
+                setLoading(false);
                 setMode("signin");
                 resetForm();
             }
@@ -101,6 +109,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
                 toast.error(res.data.msg, {
                     description: "User already exists",
                 })
+                setLoading(false);
                 setError(res.data.msg);
                 setTimeout(() => {
                     setError("");
@@ -171,6 +180,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
                     }
 
                     <Button onClick={handleSubmit} className="w-full cursor-pointer">
+                        {loading && <span className="w-4 h-4 animate-spin border-2 border-white border-t-transparent rounded-full" />}
+
                         {mode === "signin" ? "Login" : "Create Account"}
                     </Button>
 

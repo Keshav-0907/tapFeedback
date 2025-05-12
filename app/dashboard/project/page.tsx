@@ -67,8 +67,8 @@ const Projects = () => {
                             ))}
                         </div>
                     ) : (
-                        <div className="flex justify-center items-center h-96">
-                            <h1 className="text-2xl text-gray-500">No projects found</h1>
+                        <div className="flex justify-center items-center h-96 border border-dashed border-gray-300 rounded-lg">
+                            <h1 className="text-lg font-semibold text-gray-500">No projects found</h1>
                         </div>
                     )}
                 </div>

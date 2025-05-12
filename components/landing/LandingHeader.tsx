@@ -56,7 +56,7 @@ const LandingHeader = ({ setShowAuthModal }: LandingHeaderProps) => {
               </DropdownMenu>
 
             ) : (
-              <Button variant='outline' className='text-sm font-semibold' onClick={() => setShowAuthModal(true)}> Sign In </Button>
+              <Button variant='outline' className='text-sm font-semibold cursor-pointer' onClick={() => setShowAuthModal(true)}> Sign In </Button>
             )
           }
         </div>
