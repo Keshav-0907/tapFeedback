@@ -55,7 +55,7 @@ const PopupPreview = ({ popupStyles, setPopupStyles }: PopupPreviewProps) => {
           style={{
             background: 'transparent',
             border: 'none',
-            color: popupStyles?.textColor || '#000',
+            color: popupStyles?.titleColor || '#000',
             fontSize: '20px',
             cursor: 'pointer',
             lineHeight: 1,
@@ -93,7 +93,7 @@ const PopupPreview = ({ popupStyles, setPopupStyles }: PopupPreviewProps) => {
                 }}
               >
                 <div style={{ fontSize: '24px' }}>{emojis[i - 1]}</div>
-                <div style={{ fontSize: '10px', marginTop: '4px', color: popupStyles?.textColor || '#666' }}>
+                <div style={{ fontSize: '10px', marginTop: '4px', color: popupStyles?.titleColor || '#666' }}>
                   {labels[i - 1]}
                 </div>
               </div>
