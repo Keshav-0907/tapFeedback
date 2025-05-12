@@ -30,12 +30,12 @@ const Hero = ({ setShowAuthModal }: HeroProps) => {
                     "absolute inset-0 -z-10 [mask-image:radial-gradient(300px_circle_at_center,white,transparent)]"
                 )}
             />
-            <div className="z-50 w-fit flex flex-col gap-10 h-[80vh] items-center justify-center">
+            <div className="z-50 w-fit flex flex-col gap-10 md:h-[80vh] h-[60vh] items-center justify-center">
                 <Headline text="Introducing SitePop" />
 
 
                 <div className="flex flex-col gap-5 items-center max-w-2xl">
-                    <div className="text-center text-7xl font-bold flex flex-col gap-5">
+                    <div className="text-center md:text-7xl text-3xl font-bold flex flex-col md:gap-5">
                         <div>Custom Widgets.</div>
                         <div>
                             Instant <RoughNotation type="highlight" color='#FFF076' show={true}>
@@ -43,12 +43,12 @@ const Hero = ({ setShowAuthModal }: HeroProps) => {
                             </RoughNotation>.
                         </div>
                     </div>
-                    <div className="text-center text-muted-foreground text-sm">
+                    <div className="text-center text-muted-foreground md:text-sm text-xs px-4">
                         Build fully customizable widgets in minutes, embed them on your website with a single line of code, and start collecting real-time responses and actionable insights — all from one powerful dashboard.
                     </div>
 
 
-                    <div className="flex flex-col gap-5 md:flex-row">
+                    <div className="flex gap-5 flex-row">
                         {
                             user ? (
                                 <Button className="cursor-pointer" onClick={handleNavigation}>

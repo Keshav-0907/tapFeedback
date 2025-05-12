@@ -91,7 +91,7 @@ const Appearance = ({ popupId }: AppearanceProps) => {
   }
 
   return (
-    <div className="px-8 py-4 space-y-8">
+    <div className="md:px-8 px-4 py-4 space-y-8">
       <div className='flex justify-between items-center'>
         <div className="flex flex-col">
           <div className='flex items-center gap-4'>
@@ -122,7 +122,7 @@ const Appearance = ({ popupId }: AppearanceProps) => {
 
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
         {/* Title Settings */}
         <TitleSettings popupStyles={popupStyles} setPopupStyles={setPopupStyles} />
 

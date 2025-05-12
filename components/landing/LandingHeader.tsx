@@ -23,7 +23,7 @@ const LandingHeader = ({ setShowAuthModal }: LandingHeaderProps) => {
   const { user, loading, logout } = useAuth()
 
   return (
-    <div className='fixed top-0 left-0 w-full z-50 backdrop-blur bg-white/70 px-40 py-2 flex justify-between items-center border-b border-gray-200'>
+    <div className='fixed top-0 left-0 w-full z-20 backdrop-blur bg-white/70 md:px-40 px-5 py-2 flex justify-between items-center border-b border-gray-200'>
       <div className='text-lg font-semibold text-[#000000] italic font-serif'>
         Tap Feedback
       </div>
@@ -40,14 +40,17 @@ const LandingHeader = ({ setShowAuthModal }: LandingHeaderProps) => {
                 <DropdownMenuTrigger className='outline-none cursor-pointer'>
                   <div className='flex items-center gap-2'>
                     <Image src={Avtar} alt='avatar' width={40} height={40} className='rounded-full cursor-pointer' />
-                    <div className='flex iterms flex-col'>
+                    <div className='flex iterms flex-col md:flex hidden'>
                       <div className='text-sm font-semibold text-start'> {user.name} </div>
                       <div className='text-xs'> {user.email} </div>
                     </div>
                   </div>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
+                <DropdownMenuContent className=''>
                   <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    Hey, {user.name}
+                  </DropdownMenuItem>
                   <DropdownMenuItem>Settings</DropdownMenuItem>
                   <DropdownMenuItem onClick={() => logout()} className='text-red-500'>
                     Logout

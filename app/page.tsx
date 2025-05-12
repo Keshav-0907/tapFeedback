@@ -37,11 +37,11 @@ useEffect(() => {
       <LandingHeader setShowAuthModal={setShowAuthModal} />
       <Hero setShowAuthModal={setShowAuthModal}/>
        {/* <Demo /> */}
-      <div className="flex justify-between w-full max-w-6xl py-12">
-        <div className="w-1/2">
+      <div className="flex justify-between w-full max-w-6xl py-12 md:flex-row flex-col-reverse md:gap-0 gap-10">
+        <div className="md:w-1/2">
           <HowItWorks />
         </div>
-        <div className="w-1/2">
+        <div className="md:w-1/2">
           <Notifications />
         </div>
       </div>

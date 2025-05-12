@@ -61,7 +61,7 @@ const Projects = () => {
                 </div>
                 <div>
                     {projects.length > 0 ? (
-                        <div className='grid grid-cols-4 gap-4'>
+                        <div className='grid md:grid-cols-4 grid-cols-1 gap-4'>
                             {projects.map((project: any, index) => (
                                 <ProjectCard key={index} project={project} />
                             ))}
