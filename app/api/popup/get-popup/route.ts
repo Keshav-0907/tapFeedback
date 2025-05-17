@@ -24,8 +24,20 @@ export async function POST(req: NextRequest) {
             );
         }
 
+        const updatedPopup = await prisma.popup?.update({
+            where: { id: popupId },
+            data: {
+                impressionCount: {
+                    increment: 1
+                }
+            }
+        });
+
+        console.log("Updated Popup:", updatedPopup);
+
+
         return new Response(
-            JSON.stringify({ msg: "Popup fetched successfully", popup }),
+            JSON.stringify({ msg: "Popup fetched and impressionCount incremented", popup: updatedPopup }),
             { status: 200, headers: { "Content-Type": "application/json" } }
         );
 

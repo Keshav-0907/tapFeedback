@@ -17,20 +17,17 @@ export default function Home() {
   const router = useRouter()
 
 
+useEffect(() => {
+  const script = document.createElement("script");
+  script.src = "https://tap-feedback.vercel.app/embed/cmasp9qu3000bulds21g6uya3";
+  script.async = true;
+  document.body.appendChild(script);
+
+  return () => {
+    document.body.removeChild(script);
+  };
+}, []);
   
-
-// useEffect(() => {
-//   const script = document.createElement("script");
-//   script.src = "https://tap-feedback.vercel.app/embed/cmal074820004ullkio8h1hvu";
-//   script.async = true;
-//   document.body.appendChild(script);
-
-//   return () => {
-//     document.body.removeChild(script);
-//   };
-// }, []);
-  
-
 
   return (
     <div className="flex flex-col justify-center items-center">

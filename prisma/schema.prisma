@@ -38,6 +38,7 @@ model Project {
 
 model Popup {
   id                 String     @id @default(cuid())
+  impressionCount    Int        @default(0)
   projectId          String
   title              String?
   titleSize          String?

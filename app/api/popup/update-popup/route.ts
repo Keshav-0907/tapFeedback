@@ -1,7 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { validateUserToken } from "@/middlewares/authMiddleware";
+
 
 export async function PUT(req: NextRequest) {
+
+  const auth = validateUserToken(req);
+  if (!auth) {
+    return NextResponse.json({ msg: "Unauthorized" }, { status: 401 });
+  }
+
   const body = await req.json();
   const { popupId, ...fieldsToUpdate } = body;
 

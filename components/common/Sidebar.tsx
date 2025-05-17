@@ -72,7 +72,7 @@ const Sidebar = () => {
         </div>
 
       </div>
-      <div className='px-4 py-2 flex flex-col items-center gap-2 border-t'>
+      <div className='px-4 py-2 flex flex-col gap-2 border-t'>
         <Link href={'https://x.com/_keshav_malik'} target='_blank' className='text-sm flex gap-2 items-center cursor-pointer hover:bg-[#F5F5F5] p-1 rounded-sm'>
           <Info size={14} /> 
           <span className='md:flex hidden'>Get Help</span>

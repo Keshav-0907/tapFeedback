@@ -1,28 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
-import { prisma } from '@/lib/db'
-
-const JWT_SECRET = process.env.JWT_SECRET as string;
+import { prisma } from '@/lib/db';
+import { validateUserToken } from "@/middlewares/authMiddleware";
 
 export async function GET(req: NextRequest) {
   try {
-    const authHeader = req.headers.get("Authorization");
+    const authResult = validateUserToken(req);
+    console.log("Auth Result:", authResult);
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    if (!authResult) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const token = authHeader.split(" ")[1];
-
-    const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
-
-    if (!decoded || !decoded.id) {
-      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
-    }
-
-    // Fetch user from database
     const user = await prisma.user.findUnique({
-      where: { id: decoded.id },
+      where: { id: authResult.userId },
       select: {
         id: true,
         name: true,

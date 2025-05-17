@@ -1,6 +1,5 @@
 import { NextRequest } from "next/server";
 import axios from "axios";
-import { toast } from "sonner";
 
 export async function GET(
   req: NextRequest,
@@ -139,7 +138,7 @@ export async function GET(
         }),
       });
 
-      toast.success('Thank you for your feedback!');
+      console.log('Thank you for your feedback!');
     } catch (err) {
       console.error('Failed to submit feedback:', err);
     }

@@ -96,7 +96,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
                 password,
             })
 
-            if (res.data.status === 201) {
+            if (res.status === 201) {
                 toast.success(res.data.msg, {
                     description: "Account created successfully",
                 })
@@ -105,7 +105,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowAuthModal }) => {
                 resetForm();
             }
 
-            if (res.data.status === 409) {
+            if (res.status === 409) {
                 toast.error(res.data.msg, {
                     description: "User already exists",
                 })
