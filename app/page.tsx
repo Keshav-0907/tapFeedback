@@ -17,6 +17,7 @@ export default function Home() {
   const router = useRouter()
 
 
+
 useEffect(() => {
   const script = document.createElement("script");
   script.src = "https://tap-feedback.vercel.app/embed/cmasp9qu3000bulds21g6uya3";
@@ -27,6 +28,7 @@ useEffect(() => {
     document.body.removeChild(script);
   };
 }, []);
+  
   
 
   return (
