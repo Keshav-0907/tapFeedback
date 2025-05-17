@@ -70,9 +70,16 @@ const Appearance = ({ popupId }: AppearanceProps) => {
       return acc;
     }, {} as Partial<Popup>);
 
+
+
     const res = await axios.put('/api/popup/update-popup', {
       popupId,
       ...changedFields,
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+      },
     });
 
     if (res.status === 200) {
@@ -136,7 +143,7 @@ const Appearance = ({ popupId }: AppearanceProps) => {
         <CtaSettings popupStyles={popupStyles} setPopupStyles={setPopupStyles} />
 
         {/* Misc Settings */}
-        <BehaviorAnimationSettings popupStyles={popupStyles} setPopupStyles={setPopupStyles} setShowPopupPreview={setShowPopupPreview}/>
+        <BehaviorAnimationSettings popupStyles={popupStyles} setPopupStyles={setPopupStyles} setShowPopupPreview={setShowPopupPreview} />
       </div>
 
       {showPopupPreview && popupStyles && (
